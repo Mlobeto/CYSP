@@ -53,14 +53,18 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 const { 
-  
+  Usuario,
+  Ciudad,
+  SalaDeChat,
+  Mensaje,
 } = sequelize.models;
 
-
-
-
-
-
+Usuario.belongsTo(Ciudad, { foreignKey: 'ciudad_id' });
+Ciudad.hasMany(SalaDeChat, { foreignKey: 'ciudad_id' });
+SalaDeChat.belongsTo(Ciudad, { foreignKey: 'ciudad_id' });
+SalaDeChat.hasMany(Mensaje, { foreignKey: 'sala_id' });
+Mensaje.belongsTo(SalaDeChat, { foreignKey: 'sala_id' });
+Mensaje.belongsTo(Usuario, { foreignKey: 'idUsuario' });
 
 
 //---------------------------------------------------------------------------------//
